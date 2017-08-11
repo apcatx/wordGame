@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+      <link href='styles.css' rel='stylesheet'>
+    <title>Mystery Word Game</title>
+  </head>
+  <body>
+
+    <div class='mainWrapper'>
+        <div class='game'>
+            <h1>Mystery Word Game</h1>
+            <p class='randomWord'>{{ computerWord }}</p>
+            <p class='subTitle'> Enter Your Guess Below</p>
+            <form class='mainForm' action='/' method='POST'>
+                <input type='text' name='guessedLetter' class='guess' maxlength='1'>
+                <br>
+                <input type='submit' class='submit' value='SUBMIT'>
+            </form>
+            <p>You have {{guessCount}} guesses left</p>
+            <p>Your guesses: {{userGuess}}</p>
+        </div>
+        <p class='error'>{{errorMessage}}</p>
+        <form action='/error' method='POST'>
+        </form>
+    </div>
+
+</body>
+</html>
