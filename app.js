@@ -12,7 +12,7 @@ const words = fs
 
 var randomWord = words[selectRandomWord(0, words.length)];
 if (randomWord.length >= 4 && randomWord <= 6)
-return
+  return
 console.log('randomWord', randomWord);
 var randomWordArray = randomWord.split('');
 //variables used globally
@@ -35,6 +35,7 @@ function replaceDashWithLetter(letter) {
     }
   }
 }
+
 function selectRandomWord(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -46,12 +47,16 @@ app.set('view engine', 'mustache');
 
 //middleware
 app.use('/', express.static('./public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 
 app.get('/', function(req, res) {
   if (randomWordArray.toString() === dashedArray.toString()) {
-    res.render('wordGame', { randomWord: randomWord });
+    res.render('wordGame', {
+      randomWord: randomWord
+    });
   }
   res.render('wordGame', {
     computerWord: dashedArray,
@@ -71,7 +76,7 @@ app.post('/', function(req, res) {
     errorMessage =
       'You already guessed ' +
       userGuess.guessedLetter +
-      ' , guess a different letter';
+      '... guess a different letter';
   } else if (randomWord.indexOf(userGuess.guessedLetter) >= 0) {
     guessedLetter = userGuess.guessedLetter;
     for (let i = 0; i < randomWordArray.length; i++) {
@@ -88,26 +93,24 @@ app.post('/', function(req, res) {
     userGuess.guessedLetter >= 0
   ) {
     errorMessage =
-      'You may only guess one letter at a time. No spaces. No Numbers';
+      'NO Numbers. NO Spaces. TRY THAT AGAIN';
     return res.redirect('/');
-} else if (userGuesses) {guessCount -= 1;
+  } else if (userGuesses) {
+    guessCount -= 1;
     userGuesses.push(userGuess.guessedLetter);
-  }
-  if (guessCount <= 0) {
-    // guessCount = 8;
-    errorMessage = 'No more Guesses for You.';
+  } else if (guessCount <= 0) {
     return res.render('lose', {
       randomWord: randomWord,
       errorMessage: errorMessage
     });
   }
-
   res.redirect('/');
 });
 
 app.post('/again', function(req, res) {
   randomWord = words[selectRandomWord(0, words.length)];
-    console.log("random word", randomWord);  randomWordArray = randomWord.split('').replace(',',' ');
+  console.log("random word", randomWord);
+  randomWordArray = randomWord.split('');
   dashedArray = [];
   guessedLetter = '';
   userGuesses = [];
@@ -117,11 +120,11 @@ app.post('/again', function(req, res) {
   res.redirect('/');
 });
 
-app.post('/error', function(req, res){
+app.post('/error', function(req, res) {
   errorMessage = '';
   res.redirect('/');
 })
 
-app.listen(3000, function (){
+app.listen(3000, function() {
   console.log('Connected');
 });
