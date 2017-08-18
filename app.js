@@ -98,7 +98,9 @@ app.post('/', function(req, res) {
   } else if (userGuesses) {
     guessCount -= 1;
     userGuesses.push(userGuess.guessedLetter);
-  } else if (guessCount <= 0) {
+  }
+  if (guessCount <= 0) {
+    guessCount = 8;
     return res.render('lose', {
       randomWord: randomWord,
       errorMessage: errorMessage
