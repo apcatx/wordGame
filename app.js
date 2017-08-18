@@ -46,7 +46,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'mustache');
 
 //middleware
-app.use('/', express.static('./public'));
+app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
